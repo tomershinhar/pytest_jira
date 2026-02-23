@@ -42,22 +42,22 @@ class JiraIssueSchema(Schema):
         unknown = EXCLUDE  # exclude unknown fields
 
     # Default set to None for fields that are not filled
-    issuetype = fields.Nested(Type, load_default=None)
-    status = fields.Nested(Status, load_default=None)
-    priority = fields.Nested(Priority, load_default=None)
-    reporter = fields.Nested(User, load_default=None)
-    creator = fields.Nested(User, load_default=None)
-    versions = fields.List(fields.Nested(Version), load_default=None)
-    summary = fields.String(load_default=None)
-    updated = fields.String(load_default=None)
-    created = fields.String(load_default=None)
-    resolutiondate = fields.String(load_default=None)
-    duedate = fields.String(load_default=None)
-    fixVersions = fields.List(fields.Nested(Version), load_default=None)
-    components = fields.List(fields.Nested(Components), load_default=None)
-    resolution = fields.Nested(Resolution, load_default=None)
-    assignee = fields.Nested(User, load_default=None)
-    labels = fields.List(fields.String(), load_default=None)
+    issuetype = fields.Nested(Type, load_default=None, dump_default=None)
+    status = fields.Nested(Status, load_default=None, dump_default=None)
+    priority = fields.Nested(Priority, load_default=None, dump_default=None)
+    reporter = fields.Nested(User, load_default=None, dump_default=None)
+    creator = fields.Nested(User, load_default=None, dump_default=None)
+    versions = fields.List(fields.Nested(Version), load_default=None, dump_default=None)
+    summary = fields.String(load_default=None, dump_default=None)
+    updated = fields.String(load_default=None, dump_default=None)
+    created = fields.String(load_default=None, dump_default=None)
+    resolutiondate = fields.String(load_default=None, dump_default=None)
+    duedate = fields.String(load_default=None, dump_default=None)
+    fixVersions = fields.List(fields.Nested(Version), load_default=None, dump_default=None)
+    components = fields.List(fields.Nested(Components), load_default=None, dump_default=None)
+    resolution = fields.Nested(Resolution, load_default=None, dump_default=None)
+    assignee = fields.Nested(User, load_default=None, dump_default=None)
+    labels = fields.List(fields.String(), load_default=None, dump_default=None)
 
 
 class JiraIssue:
@@ -74,7 +74,7 @@ class JiraIssue:
 
     @property
     def fixed_versions(self):
-        return set(version["name"] for version in (self.fix_versions or []))
+        return set(version["name"] for version in (getattr(self, "fixVersions", None) or []))
 
     @property
     def versions_list(self):
