@@ -1,32 +1,41 @@
 from marshmallow import EXCLUDE, Schema, fields
 
+
 class Basic(Schema):
     id = fields.String()
     name = fields.String()
 
+
 class Components(Schema):
     name = fields.String()
+
 
 class Version(Schema):
     name = fields.String()
 
+
 class Priority(Basic):
     pass
+
 
 class Resolution(Basic):
     description = fields.String()
 
+
 class Status(Basic):
     description = fields.String()
 
+
 class Type(Basic):
     subtask = fields.Boolean()
+
 
 class User(Schema):
     key = fields.String()
     name = fields.String()
     displayName = fields.String()
     active = fields.Boolean()
+
 
 class JiraIssueSchema(Schema):
     class Meta:
